@@ -9,53 +9,70 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		int op = 0;
 		int[] numeros = new int[0];
-
+		
 		do {
-			System.out.println("Ingrese la opcion: "
-					+ "\n1) Cargar vector" 
-					+ "\n2) Mostrar vector"
-					+ "\n3) Buscar mínimo y máximo" 
-					+ "\n4) Ordenar de menor a mayor" 
-					+ "\n5) Ordenar de mayor a menor"
-					+ "\n6) Buscar valor" 
-					+ "\n7) Promediar" 
-					+ "\n8) Salir\n");
-			op = sc.nextInt();
-			switch (op) {
-			case 1:
-				numeros = cargarVector();
-				break;
-			case 2:
-				imprimirVector(numeros);
-				break;
-			case 3:
-				int[] maxMin = obtenerMaxMin(numeros);
-				imprimirVector(maxMin);
-				break;
-			case 4:
-				int[] copia = ordenarVecMenorMayor(numeros);
-				imprimirVector(copia);
-				break;
-			case 5:
-				int[] copia2 = ordenarVecMayorMenor(numeros);
-				imprimirVector(copia2);
-				break;
-			case 6:
-				int[] posiciones = encontrarValor(numeros);
-				imprimirPosiciones(posiciones);
-				break;
-			case 7:
-				double prom = calcularPromedio(numeros);
-				System.out.println("El promedio es: " + prom);
-				break;
-			default:
-				System.out.println("No es una opción válida. Debe ingresar una opcion entre el 1 y el 8.");
-				break;
+			imprimirMenu();
+			
+			try {
+				op = sc.nextInt();
+			
+				switch (op) {
+				case 1:
+					numeros = cargarVector();
+					break;
+				case 2:
+					imprimirVector(numeros);
+					break;
+				case 3:
+					int[] maxMin = obtenerMaxMin(numeros);
+					imprimirVector(maxMin);
+					break;
+				case 4:
+					int[] copia = ordenarVecMenorMayor(numeros);
+					imprimirVector(copia);
+					break;
+				case 5:
+					int[] copia2 = ordenarVecMayorMenor(numeros);
+					imprimirVector(copia2);
+					break;
+				case 6:
+					int[] posiciones = encontrarValor(numeros);
+					imprimirPosiciones(posiciones);
+					break;
+				case 7:
+					double prom = calcularPromedio(numeros);
+					System.out.println("El promedio es: " + prom);
+					break;
+				default:
+					if (op != 8) {
+						System.out.println(op + " no es una opción válida. Debe estar entre el 1 y el 8.");
+						break;
+					} else System.out.println("Adios...");
+				}
+			} catch (InputMismatchException e) {
+				sc.nextLine();
+				System.out.println("Debe ingresar un numero entero entre el 1 y el 8.");
+			} catch (Error e) {
+				sc.nextLine();
+				System.out.println("Error inesperado.");
 			}
 
 		} while (op != 8);
+		sc.close();
 	}
 
+	public static void imprimirMenu() {
+		System.out.println("Ingrese la opcion: "
+				+ "\n1) Cargar vector" 
+				+ "\n2) Mostrar vector"
+				+ "\n3) Buscar mínimo y máximo" 
+				+ "\n4) Ordenar de menor a mayor" 
+				+ "\n5) Ordenar de mayor a menor"
+				+ "\n6) Buscar valor" 
+				+ "\n7) Promediar" 
+				+ "\n8) Salir\n");
+	}
+	
 	public static void imprimirPosiciones(int[] posiciones) {
 		if (posiciones.length > 1) {
 			System.out.print("El valor " + posiciones[0] + " se encuentra en las posiciones ");
@@ -130,7 +147,7 @@ public class Main {
 		}
 		return prom = (acum) / (numeros.length);
 	}
-
+	
 	public static int[] ordenarVecMenorMayor(int[] numeros) {
 		int[] copia = new int[numeros.length];
 
@@ -148,10 +165,10 @@ public class Main {
 				}
 			}
 		}
-		return numeros;
+		return copia;
 
 	}
-
+	
 	public static int[] ordenarVecMayorMenor(int[] numeros) {
 		int[] copia = new int[numeros.length];
 
